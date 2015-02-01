@@ -1,0 +1,182 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Greenfield.Web.Api.ViewModels.OrderVm>
+@using System 
+@using Greenfield
+@{
+    Layout = "_BaseLayout.cshtml";
+}
+<script type="text/javascript">
+    function BaseModel() {
+        this.self = this;
+    }
+    BaseModel.prototype.toJSON = function() {
+        var copy = ko.toJS(this); //easy way to get a clean copy
+        delete copy.self; //remove an self reference property
+        return copy; //return the copy to be serialized
+    };
+
+    var rawVm = @Html.Raw(ViewBag.ModelAsJson);
+    var model = _.extend(new BaseModel(), ko.mapping.fromJS(rawVm));
+
+</script>
+<script type="text/html" id="display-row">
+    <tr data-bind="click: $parent.editRow">
+        <td>1</td>
+        <td data-bind="text: articleId"></td>
+        <td data-bind="text: description"></td>
+        <td data-bind="text: price"></td>
+        <td data-bind="text: quantity"></td>
+    </tr>
+</script>
+<script type="text/html" id="edit-row">
+    <tr>
+        <td>1</td>
+        <td><input class="td-text-input articleId" type="text" data-bind="value: articleId, typeahead: articleId" /></td>
+        <td><input class="td-text-input" type="text" data-bind="value: description" /></td>
+        <td><input class="td-text-input number" type="text" data-bind="value: price" /></td>
+        <td><input class="td-text-input number" type="text" data-bind="value: quantity" /></td>
+    </tr>
+</script>
+<h1>@ViewBag.OrderType</h1>
+<div class="grid">
+    <nav class="horizontal-menu">
+        <ul>
+            <li>
+                <a class="dropdown-toggle" href="#">Order <strong data-bind="text: id"></strong></a>
+                <ul class="dropdown-menu" data-role="dropdown">
+                    <li><a href="#"><i class="icon-link"></i> Create Invoice...</a></li>
+                    <li><a href="#"><i class="icon-printer"></i> Print...</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <form id="edit-order-form">
+        <fieldset>
+
+
+            <div class="tab-control" data-role="tab-control">
+                <ul class="tabs">
+                    <li class="active"><a href="#general">General</a></li>
+                    <li><a href="#rows">Rows</a></li>
+                </ul>
+
+                <div class="frames">
+                    <div class="frame" id="general">
+                        <div class="row">
+                            <div class="span6">
+                                <label for="orderNumberInput">Order Number</label>
+                                <div class="input-control text" data-role="input-control">
+                                    <input name="id"
+                                           id="orderNumberInput"
+                                           placeholder="Order Number (Leave Empty to Generate New)"
+                                           type="text"
+                                           data-bind="value: id"
+                                           autofocus="1">
+                                    <button type="button" class="btn-clear" tabindex="-1"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span12">
+                                <table class="table hovered display dataTable bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-left">Row Type</th>
+                                        <th class="text-left">Article Id</th>
+                                        <th class="text-left">Description</th>
+                                        <th class="text-right smallWidth">Price</th>
+                                        <th class="text-right smallWidth">Quantity</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody data-bind="template: { name: displayMode, foreach: rows }"></tbody>
+
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="5">
+                                            <p class="text-info bold text-center margin5">
+                                                <a href="#" data-bind="click: addRow">Create New Row</a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>Sum</td>
+                                        <td>@Model.TotalPrice</td>
+                                        <td>BTC</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frame" id="rows">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <input value="Save" type="submit">
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script>
+    var articlesTypeahead = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: '/api/articles/',
+        remote: '/api/articles/query/%QUERY'
+    });
+    articlesTypeahead.initialize();
+</script>
+<script>
+    
+    ko.bindingHandlers.typeahead = {
+        init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var $e = $(element);
+            console.log("init custom binding");
+            $e.typeahead(null, {
+                name: 'articles',
+                displayKey: 'id',
+                source: articlesTypeahead.ttAdapter(),
+                templates: {
+                    suggestion: Handlebars.compile('<p><strong>{{id}}</strong> – {{name}}</p>')
+                }
+            }).on('typeahead:selected', function (el, datum) {
+                bindingContext.$data.articleId(datum.id);
+                bindingContext.$data.description(datum.name);
+                bindingContext.$data.price(datum.price);
+            }).on('typeahead:autocompleted', function (el, datum) {
+                bindingContext.$data.articleId(datum.id);
+                bindingContext.$data.description(datum.name);
+                bindingContext.$data.price(datum.price);
+            });
+        }
+    };
+
+
+    // Before applying model, we need to extend the model with some basic functions (maybe use underscore extend on a "base" order protype here?)
+    model.addRow = function() {
+        model.rows.push(ko.mapping.fromJS({
+            articleId: "",
+            description: "",
+            quantity: 0.0,
+            price: 0.0
+        }));
+    };
+    model.editRow = function(row) {
+        row.isEditing(!row.isEditing());
+    };
+    _.each(model.rows, function(x) {
+        x.isEditing = ko.observable(false);
+    });
+    model.displayMode = function(row) {
+        return "edit-row"; //!row.isEditing() ? "display-row" : "edit-row";
+    }.bind(model);
+
+    ko.applyBindings(model);
+</script>
+
+<script src="/Content/js/greenfield-editorder.js"></script>

@@ -1,0 +1,36 @@
+﻿@using System
+@using Greenfield
+@{
+    Layout = "_BaseLayout.cshtml";
+}
+
+<h1>Inventory List</h1>
+<table id="inventoryitems" class="table striped hover display dataTable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#inventoryitems").DataTable({
+            serverSide: true,
+            ajax: "/api/articles/dt/",
+            columns: [
+                { data: "id" },
+                { data: "name" },
+                { data: "price" }
+            ],
+            "fnRowCallback": function (trDom, data, displayIndexOnTablePage, displayIndexFull) {
+                console.log(data);
+                // Bold the grade for all 'A' grade browsers
+                $('td:eq(0)', trDom).html('<a href="edit/' + data.id + '" >' + data.id + '</a>');
+                
+            }
+        });
+    });
+</script>

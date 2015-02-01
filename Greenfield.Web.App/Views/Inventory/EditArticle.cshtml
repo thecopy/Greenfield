@@ -1,0 +1,61 @@
+﻿@using System
+@using Greenfield
+@{
+    Layout = "_BaseLayout.cshtml";
+}
+
+<h1> <a href="/ui/inventory/">Inventory</a></h1>
+<div class="grid">
+    <form id="edit-article-form">
+        <fieldset>
+            <legend>
+                Edit Article
+            </legend>
+            <div class="row">
+                <div class="span6 border padding15">
+                    <div class="input-control text" data-role="input-control">
+                        <input name="id"
+                               placeholder="Article Number (Leave Empty to Generate New)" 
+                               type="text"
+                               value="@Model.Article.Id" 
+                               autofocus="">
+                        <button type="button" class="btn-clear" tabindex="-1"></button>
+                    </div>
+                    <div class="input-control text" data-role="input-control">
+                        <input name="name" placeholder="Article Name" type="text"
+                               value="@Model.Article.Name">
+                        <button type="button" class="btn-clear" tabindex="-1"></button>
+                    </div>
+                    <div class="input-control text" data-role="input-control">
+                        <input name="description" placeholder="Description" type="text"
+                               value="@Model.Article.Description">
+                        <button type="button" class="btn-clear" tabindex="-1"></button>
+                    </div>
+                </div>
+                <div class="span6 border padding15">
+                    <div>
+                        <label>Article Type</label>
+                        <div class="input-control radio default-style" data-role="input-control">
+                            <label>
+                                <input name="r1" checked="" type="radio">
+                                <span class="check"></span>
+                                Physical Product
+                            </label>
+                        </div>
+                        <div class="input-control radio  default-style" data-role="input-control">
+                            <label>
+                                <input name="r1" type="radio">
+                                <span class="check"></span>
+                                Virtual
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input value="Save" type="submit">
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script src="/Content/js/greenfield-inventory.js"></script>

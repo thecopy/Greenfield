@@ -1,0 +1,4 @@
+C:\dev\Greenfield\Greenfield\bin\Debug\Greenfield.dll
+C:\dev\Greenfield\Greenfield\bin\Debug\Greenfield.pdb
+C:\dev\Greenfield\Greenfield\obj\Debug\Greenfield.dll
+C:\dev\Greenfield\Greenfield\obj\Debug\Greenfield.pdb

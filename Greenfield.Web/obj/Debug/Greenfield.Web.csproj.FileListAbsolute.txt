@@ -1,0 +1,17 @@
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Greenfield.Web.dll
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Greenfield.Web.pdb
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Greenfield.dll
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Nancy.dll
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Ninject.dll
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Raven.Abstractions.dll
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Raven.Client.Lightweight.dll
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Greenfield.pdb
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Nancy.xml
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Ninject.xml
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Raven.Abstractions.pdb
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Raven.Abstractions.xml
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Raven.Client.Lightweight.pdb
+C:\dev\Greenfield\Greenfield.Web\bin\Debug\Raven.Client.Lightweight.xml
+C:\dev\Greenfield\Greenfield.Web\obj\Debug\Greenfield.Web.csprojResolveAssemblyReference.cache
+C:\dev\Greenfield\Greenfield.Web\obj\Debug\Greenfield.Web.dll
+C:\dev\Greenfield\Greenfield.Web\obj\Debug\Greenfield.Web.pdb

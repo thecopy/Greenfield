@@ -1,0 +1,36 @@
+﻿@using System
+@using Greenfield
+@{
+    Layout = "_BaseLayout.cshtml";
+}
+
+<h1>Sales Orders</h1>
+<table id="orderitems" class="table striped hover display dataTable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Total Price</th>
+            <th>Rows Count</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#orderitems").DataTable({
+            serverSide: true,
+            ajax: "/api/salesorders/dt/",
+            columns: [
+                { data: "id" },
+                { data: "totalPrice" },
+                { data: "totalRows" }
+            ],
+            "fnRowCallback": function (trDom, data, displayIndexOnTablePage, displayIndexFull) {
+                console.log(data);
+                // Bold the grade for all 'A' grade browsers
+                $('td:eq(0)', trDom).html('<a href="edit/order/' + data.id + '" >' + data.id + '</a>');
+
+            }
+        });
+    });
+</script>

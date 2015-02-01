@@ -1,0 +1,57 @@
+﻿span, header, h1,h2,h3,h4,h5,h6,div {
+    cursor: default
+}
+
+input.number{
+    font-family: monospace;
+    text-align: right;
+    white-space: nowrap;
+}
+th.smallWidth{
+    width: 100px;
+}
+
+.bg-greenfield {
+    background-color: #B2FFB8;
+}
+
+input.td-text-input {
+    border:1px #d9d9d9 solid;
+    height: 30px;
+    padding: 8px 12px;
+}
+
+.tt-input, 
+.tt-hint {
+    width: inherit;
+}
+
+.tt-hint {
+    color: #999
+}
+
+.tt-dropdown-menu {
+    width: 422px;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #0097cf;
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
